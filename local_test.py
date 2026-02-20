@@ -1,3 +1,5 @@
+# OKAY SO BASICALLY THIS FILE IS TO RUN THE TEST IMAGE HERE IT BASICALLY LOOKS AT THE IMAGE IN UR FOLDER AND GIVES THE FILE TO THE MODEL
+
 # --- CONFIGURATION ---
 device = "mps" if torch.backends.mps.is_available() else "cpu"
 model_id = "microsoft/Florence-2-base"
