@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Makerspace Tool Finder</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #222; color: white; }
+        video { border: 5px solid #444; border-radius: 10px; width: 80%; max-width: 600px; }
+        .box { padding: 20px; margin: 20px; background: #333; border-radius: 10px; }
+        #location { font-size: 2em; color: #00ffcc; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🛠️ Makerspace Assistant</h1>
+    <video id="webcam" autoplay muted></video>
+    <div class="box">
+        <div id="status">Loading AI...</div>
+        <div id="item-name">Scanning...</div>
+        <div id="location">---</div>
+    </div>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const status = document.getElementById('status');
+        const itemName = document.getElementById('item-name');
+        const locationText = document.getElementById('location');
+
+        // YOUR INVENTORY DATA
+        const inventory = {
+            "scissors": "Top Blue Drawer",
+            "cell phone": "Your Pocket",
+            "cup": "Kitchen Sink",
+            "mouse": "Computer Desk"
+        };
+
+        // Start Webcam
+        async function setupCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        }
+
+        // Run AI
+        async function runAI() {
+            const model = await cocoSsd.load();
+            status.innerText = "AI Ready! Hold up an item.";
+            
+            setInterval(async () => {
+                const predictions = await model.detect(video);
+                if (predictions.length > 0) {
+                    const detected = predictions[0].class;
+                    itemName.innerText = "I see a: " + detected;
+                    
+                    // Look up in inventory
+                    if (inventory[detected]) {
+                        locationText.innerText = "Put it in: " + inventory[detected];
+                    } else {
+                        locationText.innerText = "Location Unknown";
+                    }
+                }
+            }, 1000); // Scans every 1 second
+        }
+
+        setupCamera().then(runAI);
+    </script>
+</body>
+</html>
