@@ -6,7 +6,7 @@ Loren:
     - runs the Florence-2 model in the terminal
     - change the filepath to direct the model to your image
     - make sure you have a virtual environment (venv) running with the required software to run it
-- instructions
+- instructions to run the file
     - only do this once
         - create a venv named ".venv": python3 -m venv .venv
         - enter your venv: source .venv/bin/activate
@@ -23,4 +23,15 @@ Loren:
         - run file: python3 newFlorenceUseThisVersionWORKING.py
         - when it's done, re-run the program: python3 newFlorenceUseThisVersionWORKING.py
         - or exit the venv: deactivate
-- for checking if the venv is healthy: python -c "import torch; import transformers; print(f'GPU Ready: {torch.backends.mps.is_available()}'); print(f'Transformers: {transformers.__version__}')"
+- note: for checking if the venv is healthy: python -c "import torch; import transformers; print(f'GPU Ready: {torch.backends.mps.is_available()}'); print(f'Transformers: {transformers.__version__}')"
+
+Jaya:
+- created index.html
+    - what does it do?
+- created fix_it.py
+    - what does it do?
+- created inventory.csv
+    - what does it do?
+- instructions to run (INSERT FILE)
+
+Isabella:
