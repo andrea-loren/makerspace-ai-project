@@ -6,3 +6,4 @@ pillow
 einops
 timm
 pandas
+matplotlib (for drawing the boxes)
