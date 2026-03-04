@@ -9,22 +9,13 @@ import matplotlib.patches as patches
 device = "mps"
 model_id = "microsoft/Florence-2-base"
 
-# 2. Load
 print(f"🚀 Loading model onto {device}...")
 model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True, torch_dtype=torch.float32).to(device)
 processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True, use_fast=True)
 
-# 3. Path to your image
-image_path = "/Users/lorenmannoia/Desktop/test2ImageFlorence.png" # CHANGE THIS FILEPATH TO WHATEVER IMAGE YOU WANT
-
-if os.path.exists(image_path):
-    image = Image.open(image_path).convert("RGB")
-    
-    # Task: Object Detection
-    prompt = "<OD>"
-    
-    print(f"🧠 Analyzing image...")
-    inputs = processor(text=prompt, images=image, return_tensors="pt").to(device)
+def run_example(task_prompt, image):
+    """General function to handle different Florence-2 tasks."""
+    inputs = processor(text=task_prompt, images=image, return_tensors="pt").to(device)
 
     generated_ids = model.generate(
         input_ids=inputs["input_ids"],
@@ -34,38 +25,40 @@ if os.path.exists(image_path):
     )
 
     generated_text = processor.batch_decode(generated_ids, skip_special_tokens=False)[0]
-    parsed_answer = processor.post_process_generation(generated_text, task=prompt, image_size=(image.width, image.height))
+    result = processor.post_process_generation(generated_text, task=task_prompt, image_size=(image.width, image.height))
+    return result
 
-    print(f"\n🔍 Results for {os.path.basename(image_path)}:")
-    print(parsed_answer)
-
-    # --- 4. VISUALIZATION SECTION ---
-    print(f"🎨 Drawing bounding boxes...")
+def draw_results(image, od_results):
+    """Draws the bounding boxes if Object Detection was used."""
     fig, ax = plt.subplots(figsize=(12, 8))
     ax.imshow(image)
-    
-    # Extract bounding boxes and labels from the results
-    # Florence-2 OD output format: {'<OD>': {'bboxes': [[y1, x1, y2, x2], ...], 'labels': ['label', ...]}}
-    data = parsed_answer['<OD>']
-    
+    data = od_results['<OD>']
     for bbox, label in zip(data['bboxes'], data['labels']):
         y1, x1, y2, x2 = bbox
-        # Create a Rectangle patch (x, y, width, height)
         rect = patches.Rectangle((x1, y1), x2 - x1, y2 - y1, linewidth=2, edgecolor='red', facecolor='none')
         ax.add_patch(rect)
-        # Add the label text
-        plt.text(x1, y1, label, color='white', weight='bold', verticalalignment='bottom', 
-                 bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 2})
-    
-    plt.axis('off') # Hide the axis numbers
-    
-    # Save the result to your Desktop
-    output_path = "/Users/lorenmannoia/Desktop/detected_objects.jpg"
-    plt.savefig(output_path, bbox_inches='tight')
-    print(f"✅ Saved visual result to: {output_path}")
-    
-    # Show the window (this will pause the script until you close the window)
+        plt.text(x1, y1, label, color='white', weight='bold', bbox={'facecolor': 'red', 'alpha': 0.5})
+    plt.axis('off')
     plt.show()
+
+# --- MAIN EXECUTION ---
+image_path = "/Users/lorenmannoia/Desktop/testImageFlorence.jpg" 
+
+if os.path.exists(image_path):
+    raw_image = Image.open(image_path).convert("RGB")
+    
+    # FUNCTION 1: Generate a Detailed Caption
+    print("📝 Generating caption...")
+    caption_result = run_example("<DETAILED_CAPTION>", raw_image)
+    print(f"\nCaption: {caption_result['<DETAILED_CAPTION>']}")
+
+    # FUNCTION 2: Object Detection
+    print("\n🎯 Running Object Detection...")
+    od_result = run_example("<OD>", raw_image)
+    print(f"Detection Results: {od_result}")
+    
+    # Visualize the detection
+    draw_results(raw_image, od_result)
 
 else:
     print(f"❌ File not found at: {image_path}")
