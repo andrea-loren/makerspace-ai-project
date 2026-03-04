@@ -15,7 +15,7 @@ model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True, t
 processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True, use_fast=True)
 
 # 3. Path to your image
-image_path = "/Users/lorenmannoia/Desktop/test2ImageFlorence.png" 
+image_path = "/Users/lorenmannoia/Desktop/test2ImageFlorence.png" # CHANGE THIS FILEPATH TO WHATEVER IMAGE YOU WANT
 
 if os.path.exists(image_path):
     image = Image.open(image_path).convert("RGB")
