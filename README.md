@@ -4,8 +4,6 @@ csh makerspace project code notes
 Loren:
 - created newFlorenceUseThisVersionWORKING.py
     - runs the Florence-2 model in the terminal
-    - change the filepath to direct the model to your image
-    - make sure you have a virtual environment (venv) running with the required software to run it
 - instructions to run the file
     - only do this once
         - create a venv named ".venv": python3 -m venv .venv
