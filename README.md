@@ -23,7 +23,8 @@ Loren:
         - run file: python3 newFlorenceUseThisVersionWORKING.py
         - when it's done, re-run the program: python3 newFlorenceUseThisVersionWORKING.py
         - or exit the venv: deactivate
-- note: for checking if the venv is healthy: python -c "import torch; import transformers; print(f'GPU Ready: {torch.backends.mps.is_available()}'); print(f'Transformers: {transformers.__version__}')"
+- for checking if the venv is healthy: python -c "import torch; import transformers; print(f'GPU Ready: {torch.backends.mps.is_available()}'); print(f'Transformers: {transformers.__version__}')"
+- to change the filepath, go to line 45 and update the quote with the filepath to direct Florence to the image you want
 
 Jaya:
 - created index.html
