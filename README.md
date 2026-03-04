@@ -5,7 +5,7 @@ Loren:
 - created newFlorenceUseThisVersionWORKING.py
     - runs the Florence-2 model in the terminal
 - created setupVenv.sh
-    - Terminal shell that sets up .venv for you in case you delete or don't know how to set it up
+    - Terminal shell that sets up a virtual environment (venv) named ".venv" for you in case you delete or don't know how to set it up
 - instructions to run newFlorenceUseThisVersionWORKING.py
     - only do this once (if the setupVenv.sh file doesn't work for you)
         - create a venv named ".venv": python3 -m venv .venv
