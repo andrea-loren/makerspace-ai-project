@@ -1,7 +1,7 @@
 # makerspace-ai-project
-csh makerspace project code and instructions
+csh makerspace project code notes
 
-1. make sure you have homebrew installed
-2. use this command to install streamlit so you can run florence-2: pip3 install streamlit transformers einops timm pillow torch torchvision
-   *if it says "cannot install pip," make sure you type "pip3" instead of "pip"
-3. 
+I'm currently trying to figure out if we still need the app.py, play_florence.py, local_test.py, and repository.csv code I initially put into the repo.
+The newFlorenceUseThisVersionWORKING.py code  runs the back end of the Florence model.
+    To run it, make sure you have Streamlit installed in a virtual environment (venv) and that the venv is active before running it in the Terminal.
+-Loren
