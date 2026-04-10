@@ -1,6 +1,8 @@
 # makerspace-ai-project
 csh makerspace project code notes
 
+PROJECT HAS BEEN DISCONTINUED
+
 Loren:
 - created newFlorenceUseThisVersionWORKING.py
     - runs the Florence-2 model in the terminal
