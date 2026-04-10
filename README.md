@@ -1,7 +1,7 @@
 # makerspace-ai-project
 csh makerspace project code notes
 
-PROJECT HAS BEEN DISCONTINUED
+IGNORE newFlorenceUseThisVersionWORKING.py & setupVenv.sh!! WE DON'T NEED THESE FILES
 
 Loren:
 - created newFlorenceUseThisVersionWORKING.py
